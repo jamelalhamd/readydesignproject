@@ -7,16 +7,19 @@ const cloudinary = require("cloudinary").v2;
  // تأكد من أن المسار صحيح
 
 const signoutcontroler = (req, res) => {
+
     res.cookie("jwt", "", { maxAge: 1 });
     res.redirect("/");
 };
 
 const logincontroler = (req, res) => {
-    res.render("authen/signin");
+
+    res.render("authen/signin" ,{currentPage:"signin"});
 };
 
 const signupcontroler = (req, res) => {
-    res.render("authen/signup");
+    res.render("authen/signup" ,{currentPage:"signin"});
+   
 };
 
 const post_profileIme = async (req, res) => {

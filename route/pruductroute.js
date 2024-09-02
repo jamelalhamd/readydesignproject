@@ -1,13 +1,18 @@
 const express = require('express');
 const router = express.Router();
-
-
 const productController = require("../controller/productcontroller");
+const multer  = require('multer')
+const upload = multer({storage: multer.diskStorage({})});
+const cloudinary = require('cloudinary').v2
 
-router.get('/add',productController.addcontroller);
-router.get('/cover',productController.covercontroller);
-router.get('/dash',productController.dashcontroller);
-router.get('/edit',productController.editcontroller);
-router.get('/home',productController.homecontroller);
-router.get('/view',productController.viewcontroller);
+// Define routes and associate them with controller methods
+router.get('/404', productController.errorcontroller);
+router.get('/add', productController.addcontroller);
+router.get('/', productController.covercontroller);
+router.get('/dash', productController.dashcontroller);
+router.get('/edit', productController.editcontroller);
+router.get('/home', productController.homecontroller);
+router.get('/view', productController.viewcontroller);
+
+
 module.exports = router;
