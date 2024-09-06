@@ -1,12 +1,19 @@
 const bcrypt = require("bcrypt");
+const express = require('express');
 var jwt = require("jsonwebtoken");
+const db = require('../controller/db');
+const bodyParser = require('body-parser');
 const { check, validationResult } = require("express-validator");
 require('dotenv').config();
 
 const cloudinary = require("cloudinary").v2;
  // تأكد من أن المسار صحيح
 
-const signoutcontroler = (req, res) => {
+
+
+
+
+ const signoutcontroler = (req, res) => {
 
     res.cookie("jwt", "", { maxAge: 1 });
     res.redirect("/");
@@ -18,6 +25,7 @@ const logincontroler = (req, res) => {
 };
 
 const signupcontroler = (req, res) => {
+    
     res.render("authen/signup" ,{currentPage:"signin"});
    
 };

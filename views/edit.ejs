@@ -1,145 +1,89 @@
-
 <nav class="px-2 mt-4 d-flex flex-wrap justify-content-between" aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/">Home</a></li>
     <li class="breadcrumb-item active" aria-current="page">Ali Hassan</li>
   </ol>
-
-
-  <p class="me-md-5"> <span class="fw-medium fs-6">Id :</span> 6487021520bcf1af6319484c</p>
+  <p class="me-md-5"><span class="fw-medium fs-6">Id:</span> 6487021520bcf1af6319484c</p>
 </nav>
 
-
-
-
-
-
-
-
-<form class="mx-0 row gx-3 gy-4 mt-2">
+<form action="/edituser" method="post" class="mx-0 row gx-3 gy-4 mt-3">
   <div class="col-md-6">
-    <label for="inputfirstName4" class="form-label">First Name:</label>
-    <input
-      placeholder="Ali..."
-      type="text"
-      class="form-control"
-      id="inputfirstName4"
-    />
-  </div>
-  <div class="col-md-6">
-    <label for="inputlastName4" class="form-label">Last Name:</label>
-    <input
-      placeholder="Hassan..."
-      type="text"
-      class="form-control"
-      id="inputlastName4"
-    />
+    <label for="inputFirstName" class="form-label">First Name:</label>
+    <input name="firstname" placeholder="Ali..." type="text" class="form-control" id="inputFirstName" />
   </div>
 
   <div class="col-md-6">
-    <label for="inputemail4" class="form-label">Email:</label>
-    <input
-      placeholder="ali@gmail.com"
-      type="email"
-      class="form-control"
-      id="inputemail4"
-    />
+    <label for="inputLastName" class="form-label">Last Name:</label>
+    <input name="lastname" placeholder="Hassan..." type="text" class="form-control" id="inputLastName" />
   </div>
+
   <div class="col-md-6">
-    <label for="inputtele4" class="form-label">Telephone:</label>
-    <input
-      placeholder="011987899"
-      type="number"
-      class="form-control"
-      id="inputtele4"
-    />
+    <label for="inputEmail" class="form-label">Email:</label>
+    <input name="email" placeholder="ali@gmail.com" type="email" class="form-control" id="inputEmail" />
   </div>
 
-  <div>
-    <div class="col-md-6">
-      <label for="inputage4" class="form-label">Age:</label>
-      <input
-        placeholder="Your Age: ..."
-        type="number"
-        class="form-control"
-        id="inputage4"
-      />
-    </div>
+  <div class="col-md-6">
+    <label for="inputPassword" class="form-label">Password:</label>
+    <input name="password" type="password" class="form-control" id="inputPassword" />
   </div>
 
-  <div>
-    <div class="col-md-6">
-      <label for="inputCountry" class="form-label">Country:</label>
-      <select id="inputCountry" class="form-select">
-        <option selected hidden disabled>Choose here ...</option>
-
-        <option>Morocco</option>
-        <option>Egypt</option>
-      </select>
-    </div>
+  <div class="col-md-6">
+    <label for="inputGender" class="form-label">Gender:</label>
+    <select name="gender" class="form-control" id="inputGender">
+      <option value="" disabled selected>Select your gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
   </div>
 
-  <div>
-    <div class="col-md-6">
-      <label for="inputGender" class="form-label">Gender:</label>
-      <select id="inputGender" class="form-select">
-        <option selected hidden disabled>Choose here ...</option>
-        <option>Male</option>
-        <option>Female</option>
-      </select>
-    </div>
+  <div class="col-md-6">
+    <label for="inputPhone" class="form-label">Phone:</label>
+    <input name="phone" placeholder="017682216044" type="number" class="form-control" id="inputPhone" />
+  </div>
+
+  <div class="col-md-6">
+    <label for="inputAddress" class="form-label">Address:</label>
+    <textarea name="address" placeholder="Sudstra 7 3314 Bad Driburg" class="form-control" id="inputAddress" rows="3"></textarea>
+  </div>
+
+  <div class="col-md-6">
+    <label for="inputRole" class="form-label">Role:</label>
+    <select name="role" id="inputRole" class="form-select">
+      <option value="" disabled selected>Choose here...</option>
+      <option value="Casher">Casher Empl.</option>
+      <option value="Store">Store Admin</option>
+      <option value="Chef">Chef</option>
+    </select>
   </div>
 
   <div class="col-12">
-    <button type="submit" class="btn btn-primary">
-      Update changes
-    </button>
-    <button
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
-      type="button"
-      class="btn btn-danger"
-    >
-      Delete Customer
+    <button type="submit" class="btn btn-primary">Update changes</button>
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Delete
     </button>
   </div>
+  <h5><%= data.user ? data.user : '' %></h5>
 </form>
-</section>
+<!-- Button to trigger the modal -->
+
 
 <!-- Modal -->
-<div
-class="modal fade"
-id="exampleModal"
-tabindex="-1"
-aria-labelledby="exampleModalLabel"
-aria-hidden="true"
->
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h1 class="modal-title fs-5" id="exampleModalLabel">
-        Delete Customer
-      </h1>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="modal"
-        aria-label="Close"
-      ></button>
-    </div>
-    <div class="modal-body">Are you sure you want to continue delete the customer?</div>
-    <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-secondary"
-        data-bs-dismiss="modal"
-      >
-        Close
-      </button>
-      <button type="button" class="btn btn-danger">
-        Delete
-      </button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
   </div>
 </div>
-</div>
+
