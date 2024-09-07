@@ -24,7 +24,7 @@ class="text-center mx-auto table mt-5 table-striped table-bordered"
   <tr>
     <th scope="row"><%= index+1 %></th>
     <td><%=e.employee_id  %>	</td>
-    <td><%=e.employee_name +e.employee_lastname  %>	</td>
+    <td><%=e.employee_name+ "  "  +e.employee_lastname  %>	</td>
     <td><%=e.employee_email  %>	</td>
     <td><%=e.employee_phone  %></td>
     <td><%=e.employee_role  %></td>
@@ -35,7 +35,7 @@ class="text-center mx-auto table mt-5 table-striped table-bordered"
         data-bs-title="View details"
         data-bs-placement="top"
         class="btn btn-primary btn-sm"
-        href="/view"
+        href="/view/<%=e.employee_id  %>"
         ><i class="bi bi-eye"></i
       ></a>
 
@@ -44,7 +44,7 @@ class="text-center mx-auto table mt-5 table-striped table-bordered"
         data-bs-title="Edit user"
         data-bs-placement="top"
         class="btn btn-primary btn-sm"
-        href="/edit"
+        href="/edit/<%=e.employee_id  %>"
       >
         <i class="bi bi-pencil"></i>
       </a>
@@ -55,7 +55,7 @@ class="text-center mx-auto table mt-5 table-striped table-bordered"
   onclick="window.location.href='/edit';"
   class="btn btn-danger btn-sm"
 >
-<a href='/edit'> <i class="bi bi-trash"></i>
+<a href='/edit/<%=e.employee_id  %>'> <i class="bi bi-trash"></i>
 </button>
 
 

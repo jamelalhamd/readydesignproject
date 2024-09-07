@@ -61,8 +61,8 @@ const addcontroller_post = async (req, res) => {
     }
 
     console.log("Successfully added employee");
-    const data = { title:'add', user: "Successfully added employee"  };
-    res.render('home', { data });
+  
+    res.redirect('/dash');
   });
 };
 
@@ -74,14 +74,16 @@ const bcrypt = require('bcrypt'); // Import bcrypt
 const editcontroller_post = async (req, res) => {
   const { firstname, lastname, phone, gender, address, password, email, role } = req.body;
 
+
   console.log({ firstname, lastname, phone, gender, address, password, email, role });
+  console.log("1");
 
-  // Validate required fields
-  if (!firstname || !lastname || !phone || !gender || !address || !password || !email || !role) {
-    const data = { title: 'edit', user: 'All fields are required' };
-    return res.render('home', { data });
-  }
-
+//  if (!firstname || !lastname || !phone || !gender || !address || !password || !email || !role)
+//      {
+//     const data = { title: 'edit', user: 'All fields are required' };
+//     return res.render('home', { data });
+//   }
+  console.log("2"); 
   // Hash the password
   let hashedPassword;
   try {
@@ -113,20 +115,25 @@ const editcontroller_post = async (req, res) => {
     employee_address = ?, 
     employee_password = ?, 
     employee_role = ? 
-    WHERE employee_email = ?`;
+    WHERE employee_email
+    
+    = ?`;
 
   // Execute the query with updated employee data
   db.query(sql, [...Object.values(updatedEmployee).slice(0, -1), email], (err, result) => {
     if (err) {
       console.error("Error updating employee data: " + err);
       const data = { title: 'edit', user: "Error updating employee data: " + err };
-      return res.render('home', { data });
+      //return res.render('home', { data });
     }
 
     console.log("Successfully updated employee");
-    const data = { title: 'edit', user: "Successfully updated employee" };
-    res.render('home', { data });
+    const data = { title: 'edit', employees: result };
+
+    console.log("Employees data: " + JSON.stringify(result, null, 2)); 
+    res.redirect('/dash');
   });
+  
 };
 
   
@@ -134,32 +141,36 @@ const editcontroller_post = async (req, res) => {
 
 
 
-  const   deletecontroller_post = (req, res) => {
-    const { email } = req.body;
-    
-    console.log({ email });
-  
-    // Validate required field
-    if (!email) {
-      const data = { title: 'delete', user: 'Email is required' };
-      return res.render('home', { data: data });
+const deletecontroller_post = (req, res) => {
+
+const id = req.params.id
+console.log("id: " + id);
+
+  const sql = 'DELETE FROM employees WHERE employee_id = ?';
+
+  // Execute the query
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      console.error("Error deleting employee data: " + err);
+      const data = { title: 'dash', user: "Error deleting employee data: " + err };
+      return res.render('home', { data });
     }
-  
-    // SQL query to delete the employee based on the email
-    const sql = `DELETE FROM employees WHERE employee_email = ?`;
-  
-    // Execute the query with the email
-    db.query(sql, [email], (err, result) => {
-      if (err) {
-        console.error("Error deleting employee data: " + err);
-        const data = { title: 'delete', user: "Error deleting employee data: " + err };
-        return res.render('home', { data: data });
-      }
-      console.log("Successfully deleted employee");
-      const data = { title: 'delete', user: "Successfully deleted employee" };
-      res.render('home', { data: data });
-    });
-  };
+
+    // Check if any rows were affected
+    if (results.affectedRows === 0) {
+      console.log("No employee found with ID: " + id);
+      const data = { title: 'edit', employees: [] };
+      return res.render('home', { data, message: 'No employee found to delete' });
+    }
+
+    console.log("Successfully deleted employee data for ID: " + id);
+
+   res.redirect('/dash');
+  });
+
+
+}
+
   
 
 const covercontroller = (req, res) => { 
@@ -195,18 +206,71 @@ const dashcontroller = (req, res) => {
  }
 
 const editcontroller = (req, res) => { 
-  console.log("go edit")
-  const data={title:'edit' ,user: req.user};
-res.render('home',{data: data});
+  const { id } = req.params;
+
+  // Use parameterized query to prevent SQL injection
+  const sql = 'SELECT * FROM employees WHERE employee_id = ?';
+
+  // Execute the query
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      console.error("Error fetching employee data: " + err);
+      const data = { title: 'employees', user: "Error fetching employee data: " + err };
+      return res.render('home', { data });
+    }
+
+    // Check if any employee was found
+    if (results.length === 0) {
+      console.log("No employee found with ID: " + id);
+      const data = { title: 'dash', employees: [] };
+      return res.render('home', { data, message: 'No employee found' });
+    }
+
+    console.log("Successfully fetched employee data for ID: " + id);
+    const data = { title: 'edit', employees: results };
+
+    console.log("Employees data: " + JSON.stringify(results, null, 2)); 
+    return res.render('home', { data });
+  });
+
  }
 const homecontroller = (req, res) => { 
     const data=null
 res.render('home',{data: data}); 
 }
+
+
+
 const viewcontroller = (req, res) => {
-  const data={title:'view' ,user: req.user};
-res.render('home',{data: data}); 
-}
+  const { id } = req.params;
+
+  // Use parameterized query to prevent SQL injection
+  const sql = 'SELECT * FROM employees WHERE employee_id = ?';
+
+  // Execute the query
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      console.error("Error fetching employee data: " + err);
+      const data = { title: 'employees', user: "Error fetching employee data: " + err };
+      return res.render('home', { data });
+    }
+
+    // Check if any employee was found
+    if (results.length === 0) {
+      console.log("No employee found with ID: " + id);
+      const data = { title: 'dash', employees: [] };
+      return res.render('home', { data, message: 'No employee found' });
+    }
+
+    console.log("Successfully fetched employee data for ID: " + id);
+    const data = { title: 'view', employees: results };
+
+    console.log("Employees data: " + JSON.stringify(results, null, 2)); 
+    return res.render('home', { data });
+  });
+};
+
+
 
 module.exports = {
     errorcontroller,
