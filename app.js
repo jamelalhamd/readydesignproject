@@ -10,6 +10,11 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 
+// Middleware for Content-Security-Policy
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net http://localhost:35729; style-src 'self' https: 'unsafe-inline'; font-src 'self' https: data:;");
+  next();
+});
 
 // Middleware and Static Files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -17,7 +22,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
 app.use(cookieParser());
-app.use(helmet());
+
+// Security Middleware
+app.use(helmet());  // Helmet should be used after setting CSP for improved security
 app.use(morgan('dev'));
 
 // Rate Limiting
@@ -45,8 +52,15 @@ liveReloadServer.server.once('connection', () => {
 const productRoutes = require('./route/pruductroute'); // Correct the path if needed
 const userRoutes = require('./route/userrout'); // Correct the path if needed
 
-app.use( productRoutes);
-app.use( userRoutes);
+app.use(productRoutes);
+app.use(userRoutes);
+
+// Test Route
+app.get("/test", (req, res) => {
+  const data = null;
+  console.log("error................................................................");
+  res.render('home', { data: data });
+});
 
 // Basic Error Handling Middleware
 app.use((err, req, res, next) => {
@@ -55,15 +69,11 @@ app.use((err, req, res, next) => {
 });
 
 // 404 Handler
-
+app.use((req, res) => {
+  res.status(404).send('Sorry, we cannot find that!');
+});
 
 // Server Listening
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
-});
-
-app.get("/test",(req, res) => {
-  const data=null;
-  console.log("erorrrrr................................................................")
-  res.render('home',{data: data});
 });

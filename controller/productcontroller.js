@@ -222,7 +222,7 @@ const editcontroller = (req, res) => {
     // Check if any employee was found
     if (results.length === 0) {
       console.log("No employee found with ID: " + id);
-      const data = { title: 'dash', employees: [] };
+      const data = { title: 'dashboard', employees: [] };
       return res.render('home', { data, message: 'No employee found' });
     }
 
@@ -258,7 +258,7 @@ const viewcontroller = (req, res) => {
     // Check if any employee was found
     if (results.length === 0) {
       console.log("No employee found with ID: " + id);
-      const data = { title: 'dash', employees: [] };
+      const data = { title: 'dashboard', employees: [] };
       return res.render('home', { data, message: 'No employee found' });
     }
 

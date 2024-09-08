@@ -7,6 +7,7 @@
     <!-- Content Security Policy -->
 
     
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net http://localhost:35729;">
 
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
@@ -25,7 +26,8 @@
 
     <!-- Custom script -->
     <script src="/js/color-modes.js"></script>
-  
+
+
   
     <style>
 
@@ -351,37 +353,7 @@
 
 </section>
 
-    
-
-    
-    
- 
-
 </main>
-
-
-
-
-
-
-
-
-   
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const sidebar = document.getElementById('sidebar');
-        const toggleButton = document.getElementById('toggle-btn');
-    
-        toggleButton.addEventListener('click', function() {
-          sidebar.classList.toggle('collapsed');
-        });
-      });
-    </script>
-
-
-
     </body>
- 
-  
   </body>
 </html>
