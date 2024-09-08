@@ -271,6 +271,34 @@ const viewcontroller = (req, res) => {
 };
 
 
+const searchcontroller = (req, res) => {
+  const id = req.body.search;
+  const sql = 'SELECT * FROM employees WHERE employee_id = ? OR employee_name = ? OR employee_lastname = ? OR employee_email = ? OR employee_phone = ?';
+
+  // Execute the query
+  db.query(sql, [id, id, id, id, id], (err, results) => {
+    if (err) {
+      console.error("Error fetching employee data: " + err);
+      const data = { title: 'dashboard', user: "Error fetching employee data: " + err };
+      return res.render('home', { data });
+    }
+
+    // Check if any employee was found
+    if (results.length === 0) {
+      console.log("No employee found for search term: " + id);
+      const data = { title: 'dashboard', employees: [] };
+      return res.render('home', { data, message: 'No employee found' });
+    }
+
+    console.log("Successfully fetched employee data for search term: " + id);
+    const data = { title: 'dashboard', employees: results };
+
+    console.log("Employees data: " + JSON.stringify(results, null, 2));
+    return res.render('home', { data });
+  });
+};
+
+
 
 module.exports = {
     errorcontroller,
@@ -282,5 +310,6 @@ module.exports = {
     viewcontroller,
     addcontroller_post,
     editcontroller_post,
-    deletecontroller_post
+    deletecontroller_post,
+    searchcontroller
 };
